@@ -3,6 +3,7 @@ import { Feedback } from './feedback/feedback';
 import { Statistics } from './statistics/statistics';
 import { FeedbackOptions } from './feedbackOptions/feedbackOptions';
 import { Section } from './section/section';
+import { Notification } from './notification/notification';
 
 export class App extends Component {
   state = {
@@ -58,17 +59,23 @@ export class App extends Component {
             options={this.plusFeedBack}
             onLeaveFeedback={this.plusFeedBack}
           ></FeedbackOptions>
+
+          {this.state.total == null && (
+            <Notification message="There is no feedback"></Notification>
+          )}
         </Section>
         {/* <Feedback state={this.state} plusFeedBack={this.plusFeedBack} /> */}
-        <Section title="Statistics">
-          <Statistics
-            good={this.state.good}
-            neutral={this.state.neutral}
-            bad={this.state.bad}
-            total={this.state.total}
-            positivePercentage={this.state.feedback}
-          ></Statistics>
-        </Section>
+        {this.state.total >= 1 && (
+          <Section title="Statistics">
+            <Statistics
+              good={this.state.good}
+              neutral={this.state.neutral}
+              bad={this.state.bad}
+              total={this.state.total}
+              positivePercentage={this.state.feedback}
+            ></Statistics>
+          </Section>
+        )}
       </>
     );
   }
