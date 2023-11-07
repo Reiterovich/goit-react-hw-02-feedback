@@ -13,7 +13,6 @@ export class App extends Component {
 
   plusFeedBackAll = option => {
     this.setState(prevState => {
-      // console.log(prevState);
       return {
         [option]: prevState[option] + 1,
       };
@@ -21,27 +20,20 @@ export class App extends Component {
   };
 
   plusFeedBack = evt => {
-    // console.log(evt);
     const option = evt.target.name;
-    // console.log(option);
+
     this.plusFeedBackAll(option);
-    this.countTotalFeedback();
     this.countPositiveFeedbackPercentage(evt);
   };
 
   countTotalFeedback = () => {
-    this.setState(prevState => {
-      console.log(prevState);
-      return {
-        total: prevState.good + prevState.neutral + prevState.bad,
-      };
-    });
+    const total = this.state.good + this.state.neutral + this.state.bad;
+    return total;
   };
 
   countPositiveFeedbackPercentage = evt => {
-    console.log(evt);
     this.setState(prevState => {
-      const total = prevState.total;
+      const total = this.state.good + this.state.neutral + this.state.bad;
       const good = prevState.good;
       const percent = (good / total) * 100;
       return {
@@ -54,23 +46,20 @@ export class App extends Component {
     return (
       <>
         <Section title="Please leave feedback">
-          <FeedbackOptions
-            options={this.plusFeedBack}
-            onLeaveFeedback={this.plusFeedBack}
-          ></FeedbackOptions>
+          <FeedbackOptions options={this.plusFeedBack}></FeedbackOptions>
 
-          {this.state.total == null && (
+          {this.countTotalFeedback() == null && (
             <Notification message="There is no feedback"></Notification>
           )}
         </Section>
-        {/* <Feedback state={this.state} plusFeedBack={this.plusFeedBack} /> */}
-        {this.state.total >= 1 && (
+
+        {this.countTotalFeedback() >= 1 && (
           <Section title="Statistics">
             <Statistics
               good={this.state.good}
               neutral={this.state.neutral}
               bad={this.state.bad}
-              total={this.state.total}
+              total={this.countTotalFeedback()}
               positivePercentage={this.state.feedback}
             ></Statistics>
           </Section>
