@@ -1,7 +1,7 @@
 export const Notification = ({ message }) => {
   return (
     <>
-      <h1>{message}</h1>
+      <h1 style={{ marginLeft: 50 }}>{message}</h1>
     </>
   );
 };

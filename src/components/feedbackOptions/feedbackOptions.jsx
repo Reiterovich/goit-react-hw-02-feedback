@@ -1,26 +1,16 @@
 import css from './feedbackOptions.module.css';
 
-export const FeedbackOptions = ({ options }) => {
-  const green = css.btnG;
-  const white = css.btnN;
-  const red = css.btnB;
-
-  const arrey = [
-    { name: 'good', class: green },
-    { name: 'neutral', class: white },
-    { name: 'bad', class: red },
-  ];
-
+export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
+  const color = [css.btnG, css.btnN, css.btnB];
   return (
     <>
-      {arrey.map(ar => (
+      {options.map((option, ind) => (
         <button
-          key={ar.name}
-          className={ar.class}
-          name={ar.name}
-          onClick={options}
+          key={option}
+          className={color[ind]}
+          onClick={() => onLeaveFeedback(option)}
         >
-          {ar.name}
+          {option}
         </button>
       ))}
     </>
